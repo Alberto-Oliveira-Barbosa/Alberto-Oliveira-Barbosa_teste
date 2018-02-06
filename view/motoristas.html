@@ -1,0 +1,64 @@
+<div>
+
+  <h3>{{nomeModulo}}</h3>
+
+  <input type="search" class="form-control" ng-model="pesquisa" placeholder="Buscar um motorista" />
+
+  <table ng-show="motoristas.length > 0" class="table">
+    <tr>
+      <th>Apagar</th>
+      <th>Nome</th>
+      <th>Data de Nascimento</th>
+      <th>CPF</th>
+      <th>Modelo do carro</th>
+      <th>Sexo</th>
+      <th>Situação</th>
+    </tr>
+    <tr ng-class="{'selecionado negrito': motorista.selecionado}" ng-repeat="motorista in motoristas | filter:{nome: pesquisa} | orderBy:nome">
+      <td><input type="checkbox" ng-model="motorista.selecionado" /></td>
+      <td> {{motorista.nome}} </td>
+      <td> {{motorista.data | date:"dd/MM/yyyy"}} </td>
+      <td> {{motorista.cpf}} </td>
+      <td> {{motorista.carro}}</td>
+      <td> {{motorista.sexo.tipo}} </td>
+      <td> {{motorista.situacao.nome}} </td>
+    </tr>
+
+  </table >
+  <hr/>
+
+  <form name="motoristaForm">
+    <fieldset>
+      <legend>Cadastar um novo motorista</legend>
+        <input type="text" class="form-control" ng-model="motorista.nome" placeholder="Nome" name="nome" ng-required="true">
+        <span ng-show="motoristaForm.nome.$invalid && motoristaForm.nome.$dirty" class="alert alert-danger">Campo nome obrigatório</span>
+
+        <input type="text" class="form-control" ng-model="motorista.data" name="data" placeholder="Data de nascimento" ng-required="true" ui-date>
+        <span class="alert alert-danger" ng-show="motoristaForm.data.$invalid && motoristaForm.data.$dirty">Campo data de nascimento obrigatório.</span>
+
+        <input type=" text" class="form-control" ng-model="motorista.cpf" name="cpf" placeholder="CPF" ng-required="true" ui-cpf>
+        <span class="alert alert-danger" ng-show="motoristaForm.cpf.$invalid && motoristaForm.cpf.$dirty">Campo CPF obrigatório.</span>
+
+        <select class="form-control" ng-model="motorista.sexo" name="sexo" ng-options="sexo.tipo for sexo in sexos" ng-required="true">
+          <option value="">Selecione o sexo</option>
+        </select>
+        <span class="alert alert-danger" ng-show="motoristaForm.sexo.$invalid && motoristaForm.sexo.$dirty">Campo sexo obrigatório.</span>
+    </fieldset>
+
+    <fieldset>
+      <input type=" text" class="form-control" ng-model="motorista.carro" name="carro" placeholder="Modelo do automóvel" ng-required="true">
+      <span class="alert alert-danger" ng-show="motoristaForm.carro.$invalid && motoristaForm.carro.$dirty">Campo modelo do automóvel obrigatório.</span>
+
+      <select class="form-control" ng-model="motorista.situacao" name="situacao" ng-options="situacao.nome for situacao in statusDoMotorista" ng- required="true">
+        <option value="">Selecione a situação do motorista.</option>
+      </select>
+      <span class="alert alert-danger" ng-show="motoristaForm.situacao.$invalid && motoristaForm.situacao.$dirty">Campo situação do motorista obrigatório.</span>
+    </fieldset>
+
+
+  </form>
+
+
+  <button  class="btn btn-primary btn-block" ng-click="adicionarMotorista(motorista)" ng-disabled="motoristaForm.$invalid">Adicionar motorista</button>
+  <button  class="btn btn-danger btn-block" ng-click="apagarMotoristas(motoristas)" ng-show="motoristas.length>0">Apagar motoristas</button>
+</div>

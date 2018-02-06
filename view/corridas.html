@@ -1,0 +1,46 @@
+<div>
+
+  <h3>{{nomeModulo}}</h3>
+
+  <input type="search" class="form-control" ng-model="pesquisa" placeholder="Buscar uma corrida" />
+
+  <table ng-show="corridas.length > 0" class="table">
+    <tr>
+      <th>Apagar</th>
+      <th>Nome do Motorista</th>
+      <th>Nome do Passageiro</th>
+      <th>Valor da Corrida</th>
+    </tr>
+    <tr ng-class="{'selecionado negrito': corrida.selecionado}" ng-repeat="corrida in corridas | filter:{nome: pesquisa} | orderBy:nome">
+      <td><input type="checkbox" ng-model="corrida.selecionado" /></td>
+      <td> {{corrida.motorista.nome}} </td>
+      <td> {{corrida.passageiro.nome}} </td>
+      <td> {{corrida.valor | currency}} </td>
+    </tr>
+
+  </table >
+  <hr/>
+
+  <form name="corridaForm">
+    <fieldset>
+      <legend>Cadastar uma nova corrida</legend>
+        <select class="form-control" ng-model="corrida.motorista" name="motorista" ng-options="motorista.nome group by motorista.situacao for motorista in motoristas" ng-required="true">
+          <option value="">Selecione o nome do motorista.</option>
+        </select>
+        <span class="alert alert-danger" ng-show="corridaForm.motorista.$invalid && corridaForm.motorista.$dirty">Campo com o nome do motorista obrigatório.</span>
+        <span class="alert alert-danger" ng-show="corrida.motorista.situacao == 'INATIVO'">Motorista inativo! Selecione um motorista ativo da lista.</span>
+
+        <select class="form-control" ng-model="corrida.passageiro" name="passageiro" ng-options="passageiro.nome for passageiro in passageiros" ng-required="true">
+          <option value="">Selecione o nome do passageiro.</option>
+        </select>
+        <span class="alert alert-danger" ng-show="corridaForm.passageiro.$invalid && corridaForm.passageiro.$dirty">Campo com o nome do passageiro obrigatório.</span>
+
+        <input type=" text" class="form-control" ng-model="corrida.valor" name="valor" placeholder="Informe o valor da corrida." ng-required="true">
+        <span class="alert alert-danger" ng-show="corridaForm.valor.$invalid && corridaForm.valor.$dirty">Campo valor obrigatório.</span>
+    </fieldset>
+  </form>
+
+
+  <button  class="btn btn-primary btn-block" ng-click="adicionarCorrida(corrida)" ng-disabled="corridaForm.$invalid || corrida.motorista.situacao == 'INATIVO'">Adicionar corrida</button>
+  <button  class="btn btn-danger btn-block" ng-click="apagarCorridas(corridas)" ng-show="corridas.length>0">Apagar corridas</button>
+</div>

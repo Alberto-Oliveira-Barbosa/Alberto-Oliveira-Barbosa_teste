@@ -1,0 +1,48 @@
+<div>
+
+  <h3>{{nomeModulo}}</h3>
+
+  <input type="search" class="form-control" ng-model="pesquisa" placeholder="Buscar uma passageiro" />
+
+  <table ng-show="passageiros.length > 0" class="table">
+    <tr>
+      <th>Apagar</th>
+      <th>Nome</th>
+      <th>Data de Nascimento</th>
+      <th>CPF</th>
+      <th>Sexo</th>
+    </tr>
+    <tr ng-class="{'selecionado negrito': passageiro.selecionado}" ng-repeat="passageiro in passageiros | filter:{nome: pesquisa} | orderBy:nome">
+      <td><input type="checkbox" ng-model="passageiro.selecionado" /></td>
+      <td> {{passageiro.nome}} </td>
+      <td> {{passageiro.data | date:"dd/MM/yyyy"}} </td>
+      <td> {{passageiro.cpf}} </td>
+      <td> {{passageiro.sexo.tipo}} </td>
+    </tr>
+
+  </table >
+  <hr/>
+
+  <form name="passageiroForm">
+    <fieldset>
+      <legend>Cadastar um novo passageiro</legend>
+        <input type="text" class="form-control" ng-model="passageiro.nome" placeholder="Nome" name="nome" ng-required="true">
+        <span ng-show="passageiroForm.nome.$invalid && passageiroForm.nome.$dirty" class="alert alert-danger">Campo nome obrigatório</span>
+
+        <input type="text" class="form-control" ng-model="passageiro.data" name="data" placeholder="Data de nascimento" ng-required="true" ui-date>
+        <span class="alert alert-danger" ng-show="passageiroForm.data.$invalid && passageiroForm.data.$dirty">Campo data de nascimento obrigatório.</span>
+
+        <input type=" text" class="form-control" ng-model="passageiro.cpf" name="cpf" placeholder="CPF" ng-required="true" ui-cpf>
+        <span class="alert alert-danger" ng-show="passageiroForm.cpf.$invalid && passageiroForm.cpf.$dirty">Campo CPF obrigatório.</span>
+
+        <select class="form-control" ng-model="passageiro.sexo" name="sexo" ng-options="sexo.tipo for sexo in sexos" ng-required="true">
+          <option value="">Selecione o sexo</option>
+        </select>
+        <span class="alert alert-danger" ng-show="passageiroForm.sexo.$invalid && passageiroForm.sexo.$dirty">Campo sexo obrigatório.</span>
+    </fieldset>
+  </form>
+
+
+  <button  class="btn btn-primary btn-block" ng-click="adicionarPassageiro(passageiro)" ng-disabled="passageiroForm.$invalid">Adicionar passageiro</button>
+  <button  class="btn btn-danger btn-block" ng-click="apagarPassageiros(passageiros)" ng-show="passageiros.length>0">Apagar passageiros</button>
+</div>
