@@ -7,3 +7,5 @@ html5
 CSS
 Bootstrap
 Angular
+
+para testar em localhost ativar o script server.js na pasta backend. ele rodará na porta 3003
