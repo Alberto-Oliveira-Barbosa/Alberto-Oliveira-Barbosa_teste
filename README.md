@@ -1,11 +1,11 @@
-# Alberto-Oliveira-Barbosa_teste
+# Sistema de Corridas Compartilhadas
 
 Sistema de Cadastro de Corridas Compartilhadas
 
-Tecnologias utilizadas:
-html5
-CSS
-Bootstrap
-Angular
+Tecnologias usadas:
+* Html 5
+* CSS
+* Bootstrap
+* Angular 1.6
 
-para testar em localhost ativar o script server.js na pasta backend. ele rodará na porta 3003
+Os dados são carregados através de um arquivo JSON já definido dentro do script do back-end para testar em localhost ativar o script **server.js** na pasta backend. ele rodará na porta **3003**
